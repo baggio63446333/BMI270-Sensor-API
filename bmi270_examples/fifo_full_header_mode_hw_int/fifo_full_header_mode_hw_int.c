@@ -44,24 +44,24 @@
 /******************************************************************************/
 /*!                        Global Variables                                   */
 
-volatile uint8_t interrupt_status = 0;
+static volatile uint8_t interrupt_status = 0;
 
 /* To read sensortime, extra 3 bytes are added to fifo buffer. */
-uint16_t fifo_buffer_size = BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE;
+static uint16_t fifo_buffer_size = BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE;
 
 /* Number of bytes of FIFO data
  * NOTE : Dummy byte (for SPI Interface) required for FIFO data read must be given as part of array size
  * Array size same as fifo_buffer_size
  */
-uint8_t fifo_data[BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE];
+static uint8_t fifo_data[BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE];
 
 /* Array of accelerometer frames -> Total bytes =
 * 157 * (6 axes + 1 header bytes) = 1099 bytes */
-struct bmi2_sens_axes_data fifo_accel_data[BMI2_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_accel_data[BMI2_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
 
 /* Array of gyro frames -> Total bytes =
  * 157 * (6 axes + 1 header bytes) = 1099 bytes */
-struct bmi2_sens_axes_data fifo_gyro_data[BMI2_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_gyro_data[BMI2_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
 
 /******************************************************************************/
 /*!           Static Function Declaration                                     */
@@ -180,11 +180,11 @@ int main(void)
     bmi2_error_codes_print_result(rslt);
 
     /* Interrupt pin configuration */
-    pin_config.pin_type = BMI2_INT2;
-    pin_config.pin_cfg[1].input_en = BMI2_INT_INPUT_DISABLE;
-    pin_config.pin_cfg[1].lvl = BMI2_INT_ACTIVE_LOW;
-    pin_config.pin_cfg[1].od = BMI2_INT_PUSH_PULL;
-    pin_config.pin_cfg[1].output_en = BMI2_INT_OUTPUT_ENABLE;
+    pin_config.pin_type = BMI2_INT1;
+    pin_config.pin_cfg[0].input_en = BMI2_INT_INPUT_DISABLE;
+    pin_config.pin_cfg[0].lvl = BMI2_INT_ACTIVE_HIGH;
+    pin_config.pin_cfg[0].od = BMI2_INT_PUSH_PULL;
+    pin_config.pin_cfg[0].output_en = BMI2_INT_OUTPUT_ENABLE;
     pin_config.int_latch = BMI2_INT_NON_LATCH;
 
     /* Set Hardware interrupt pin configuration */
@@ -193,7 +193,7 @@ int main(void)
 
     /* Map FIFO full interrupt. */
     fifoframe.data_int_map = BMI2_FFULL_INT;
-    rslt = bmi2_map_data_int(fifoframe.data_int_map, BMI2_INT2, &bmi2_dev);
+    rslt = bmi2_map_data_int(fifoframe.data_int_map, BMI2_INT1, &bmi2_dev);
     bmi2_error_codes_print_result(rslt);
 
     /* Get board information */

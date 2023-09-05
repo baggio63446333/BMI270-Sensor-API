@@ -14,7 +14,7 @@
 /******************************************************************************/
 /*!           Global variable Declaration                                     */
 
-volatile uint8_t interrupt_status = 0;
+static volatile uint8_t interrupt_status = 0;
 
 /******************************************************************************/
 /*!                Macro definition                                           */
@@ -76,7 +76,7 @@ int main(void)
     uint8_t board = 0;
 
     /* Select features and their pins to be mapped to. */
-    struct bmi2_sens_int_config sens_int = { .type = BMI2_ANY_MOTION, .hw_int_pin = BMI2_INT2 };
+    struct bmi2_sens_int_config sens_int = { .type = BMI2_ANY_MOTION, .hw_int_pin = BMI2_INT1 };
 
     /* Interface reference is given as a parameter
      * For I2C : BMI2_I2C_INTF
@@ -198,11 +198,11 @@ static int8_t set_feature_config(struct bmi2_dev *bmi2_dev)
         bmi2_error_codes_print_result(rslt);
 
         /* Interrupt pin configuration */
-        pin_config.pin_type = BMI2_INT2;
-        pin_config.pin_cfg[1].input_en = BMI2_INT_INPUT_DISABLE;
-        pin_config.pin_cfg[1].lvl = BMI2_INT_ACTIVE_LOW;
-        pin_config.pin_cfg[1].od = BMI2_INT_PUSH_PULL;
-        pin_config.pin_cfg[1].output_en = BMI2_INT_OUTPUT_ENABLE;
+        pin_config.pin_type = BMI2_INT1;
+        pin_config.pin_cfg[0].input_en = BMI2_INT_INPUT_DISABLE;
+        pin_config.pin_cfg[0].lvl = BMI2_INT_ACTIVE_HIGH;
+        pin_config.pin_cfg[0].od = BMI2_INT_PUSH_PULL;
+        pin_config.pin_cfg[0].output_en = BMI2_INT_OUTPUT_ENABLE;
         pin_config.int_latch = BMI2_INT_NON_LATCH;
 
         rslt = bmi2_set_int_pin_config(&pin_config, bmi2_dev);

@@ -35,15 +35,15 @@
 /* Number of bytes of FIFO data
  * NOTE : Dummy byte (for SPI Interface) required for FIFO data read must be given as part of array size
  */
-uint8_t fifo_data[BMI270_LEGACY_FIFO_RAW_DATA_BUFFER_SIZE] = { 0 };
+static uint8_t fifo_data[BMI270_LEGACY_FIFO_RAW_DATA_BUFFER_SIZE] = { 0 };
 
 /* Array of accelerometer frames -> Total bytes =
  * 150 * (6 axes bytes) = 900 bytes */
-struct bmi2_sens_axes_data fifo_accel_data[BMI270_LEGACY_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_accel_data[BMI270_LEGACY_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
 
 /* Array of gyro frames -> Total bytes =
  * 150 * (6 axes bytes) = 900 bytes */
-struct bmi2_sens_axes_data fifo_gyro_data[BMI270_LEGACY_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_gyro_data[BMI270_LEGACY_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
 
 /******************************************************************************/
 /*!                 Static Function Declaration                               */

@@ -149,7 +149,7 @@ int main(void)
 static int8_t verify_gyro_foc_data(struct bmi2_dev *bmi)
 {
     int8_t rslt;
-    struct bmi2_sens_axes_data gyr_foc_data[GYRO_SAMPLE_COUNT] = { { 0 } };
+    static struct bmi2_sens_axes_data gyr_foc_data[GYRO_SAMPLE_COUNT] = { { 0 } };
     struct temp_axes_val temp_foc_data = { 0 };
     struct bmi2_sens_axes_data avg_foc_data = { 0 };
     struct bmi2_sens_data sensor_data = { { 0 } };

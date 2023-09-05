@@ -117,7 +117,7 @@ int main(void)
      * For I2C : BMI2_I2C_INTF
      * For SPI : BMI2_SPI_INTF
      */
-    rslt = bmi2_interface_init(&dev, BMI2_SPI_INTF);
+    rslt = bmi2_interface_init(&dev, BMI2_I2C_INTF);
     bmi2_error_codes_print_result(rslt);
 
     printf("Functional test for accel foc start..\n\n");
@@ -418,7 +418,7 @@ static int8_t verify_accel_foc_data(uint8_t range,
     int16_t xh, yh, zh;
     int16_t min_val = 0;
     int16_t max_val = 0;
-    struct bmi2_sens_axes_data accel_foc_data[ACCEL_SAMPLE_COUNT] = { { 0 } };
+    static struct bmi2_sens_axes_data accel_foc_data[ACCEL_SAMPLE_COUNT] = { { 0 } };
     struct temp_axes_val temp_foc_data = { 0 };
     struct bmi2_sens_axes_data avg_accel_foc_data = { 0 };
     struct bmi2_sens_data sensor_data = { { 0 } };

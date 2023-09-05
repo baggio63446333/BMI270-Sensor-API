@@ -15,7 +15,7 @@
 /******************************************************************************/
 /*!           Global variable Declaration                                     */
 
-volatile uint8_t drdy_int_status = 0;
+static volatile uint8_t drdy_int_status = 0;
 
 /******************************************************************************/
 /*!                Macro definition                                           */
@@ -100,7 +100,7 @@ int main(void)
      * For I2C : BMI2_I2C_INTF
      * For SPI : BMI2_SPI_INTF
      */
-    rslt = bmi2_interface_init(&bmi, BMI2_SPI_INTF);
+    rslt = bmi2_interface_init(&bmi, BMI2_I2C_INTF);
     bmi2_error_codes_print_result(rslt);
 
     /* Initialize bmi270. */
@@ -250,7 +250,7 @@ static int8_t set_accel_config(struct bmi2_dev *bmi)
         /* Interrupt pin configuration */
         pin_config.pin_type = BMI2_INT1;
         pin_config.pin_cfg[0].input_en = BMI2_INT_INPUT_DISABLE;
-        pin_config.pin_cfg[0].lvl = BMI2_INT_ACTIVE_LOW;
+        pin_config.pin_cfg[0].lvl = BMI2_INT_ACTIVE_HIGH;
         pin_config.pin_cfg[0].od = BMI2_INT_PUSH_PULL;
         pin_config.pin_cfg[0].output_en = BMI2_INT_OUTPUT_ENABLE;
         pin_config.int_latch = BMI2_INT_NON_LATCH;

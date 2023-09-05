@@ -39,20 +39,20 @@
 /******************************************************************************/
 /*!                        Global Variables                                   */
 
-volatile uint8_t interrupt_status = 0;
+static volatile uint8_t interrupt_status = 0;
 
 /* Number of bytes of FIFO data
  * NOTE : Dummy byte (for SPI Interface) required for FIFO data read must be given as part of array size
  */
-uint8_t fifo_data[BMI2_FIFO_RAW_DATA_BUFFER_SIZE] = { 0 };
+static uint8_t fifo_data[BMI2_FIFO_RAW_DATA_BUFFER_SIZE] = { 0 };
 
 /* Array of accelerometer frames -> Total bytes =
  * 170 * (6 axes bytes) = 1020 bytes */
-struct bmi2_sens_axes_data fifo_accel_data[BMI2_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_accel_data[BMI2_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
 
 /* Array of gyro frames -> Total bytes =
  * 170 * (6 axes bytes) = 1020 bytes */
-struct bmi2_sens_axes_data fifo_gyro_data[BMI2_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_gyro_data[BMI2_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
 
 /******************************************************************************/
 /*!                 Static Function Declaration                               */
@@ -175,7 +175,7 @@ int main(void)
     /* Interrupt pin configuration */
     pin_config.pin_type = BMI2_INT1;
     pin_config.pin_cfg[0].input_en = BMI2_INT_INPUT_DISABLE;
-    pin_config.pin_cfg[0].lvl = BMI2_INT_ACTIVE_LOW;
+    pin_config.pin_cfg[0].lvl = BMI2_INT_ACTIVE_HIGH;
     pin_config.pin_cfg[0].od = BMI2_INT_PUSH_PULL;
     pin_config.pin_cfg[0].output_en = BMI2_INT_OUTPUT_ENABLE;
     pin_config.int_latch = BMI2_INT_NON_LATCH;

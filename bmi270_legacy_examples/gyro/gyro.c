@@ -64,7 +64,7 @@ int main(void)
      * For I2C : BMI2_I2C_INTF
      * For SPI : BMI2_SPI_INTF
      */
-    rslt = bmi2_interface_init(&bmi, BMI2_SPI_INTF);
+    rslt = bmi2_interface_init(&bmi, BMI2_I2C_INTF);
     bmi2_error_codes_print_result(rslt);
 
     /* Initialize bmi270_legacy. */

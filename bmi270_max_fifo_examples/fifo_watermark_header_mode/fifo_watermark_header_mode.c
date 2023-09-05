@@ -42,21 +42,21 @@
 /*!                        Global Variables                                   */
 
 /* To read sensortime, extra 3 bytes are added to fifo buffer */
-uint16_t fifo_buffer_size = BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE;
+static uint16_t fifo_buffer_size = BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE;
 
 /* Number of bytes of FIFO data
  * NOTE : Dummy byte (for SPI Interface) required for FIFO data read must be given as part of array size
  * Array size same as fifo_buffer_size
  */
-uint8_t fifo_data[BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE];
+static uint8_t fifo_data[BMI2_FIFO_RAW_DATA_BUFFER_SIZE + SENSORTIME_OVERHEAD_BYTE];
 
 /* Array of accelerometer frames -> Total bytes =
  * 55 * (6 axes + 1 header bytes) = 385 bytes */
-struct bmi2_sens_axes_data fifo_accel_data[BMI2_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_accel_data[BMI2_FIFO_ACCEL_FRAME_COUNT] = { { 0 } };
 
 /* Array of gyro frames -> Total bytes =
  * 55 * (6 axes + 1 header bytes) = 385 bytes */
-struct bmi2_sens_axes_data fifo_gyro_data[BMI2_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
+static struct bmi2_sens_axes_data fifo_gyro_data[BMI2_FIFO_GYRO_FRAME_COUNT] = { { 0 } };
 
 /******************************************************************************/
 /*!           Static Function Declaration                                     */
@@ -106,7 +106,7 @@ int main(void)
      * For I2C : BMI2_I2C_INTF
      * For SPI : BMI2_SPI_INTF
      */
-    rslt = bmi2_interface_init(&bmi2_dev, BMI2_SPI_INTF);
+    rslt = bmi2_interface_init(&bmi2_dev, BMI2_I2C_INTF);
     bmi2_error_codes_print_result(rslt);
 
     /* Initialize bmi270_maximum_fifo. */
